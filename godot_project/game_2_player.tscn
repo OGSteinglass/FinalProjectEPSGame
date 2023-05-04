@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://cpa8o3u4r08f6"]
+
+[ext_resource type="Script" path="res://Menu button.gd" id="1_0blxb"]
+
+[node name="Game 2 Player" type="Node2D"]
+
+[node name="Menu button" type="Button" parent="."]
+offset_left = 444.0
+offset_top = 32.0
+offset_right = 639.0
+offset_bottom = 81.0
+text = "Back to Main Menu"
+script = ExtResource("1_0blxb")
+
+[connection signal="pressed" from="Menu button" to="Menu button" method="_on_pressed"]
