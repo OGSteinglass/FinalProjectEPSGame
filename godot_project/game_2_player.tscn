@@ -1,6 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://cpa8o3u4r08f6"]
+[gd_scene load_steps=5 format=3 uid="uid://cpa8o3u4r08f6"]
 
 [ext_resource type="Script" path="res://Menu button.gd" id="1_0blxb"]
+[ext_resource type="PackedScene" uid="uid://b6gqkbpf8sq2v" path="res://game_tile.tscn" id="2_kbtlo"]
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_b5l5w"]
+scenes/4/scene = ExtResource("2_kbtlo")
+
+[sub_resource type="TileSet" id="TileSet_yehpb"]
+sources/0 = SubResource("TileSetScenesCollectionSource_b5l5w")
 
 [node name="Game 2 Player" type="Node2D"]
 
@@ -11,5 +18,12 @@ offset_right = 639.0
 offset_bottom = 81.0
 text = "Back to Main Menu"
 script = ExtResource("1_0blxb")
+
+[node name="TileMap" type="TileMap" parent="."]
+position = Vector2(573, 356)
+scale = Vector2(3, 3)
+tile_set = SubResource("TileSet_yehpb")
+format = 2
+layer_0/tile_data = PackedInt32Array(-196612, 0, 262144, -131076, 0, 262144, -65540, 0, 262144, -4, 0, 262144, 65532, 0, 262144, 131068, 0, 262144, 196604, 0, 262144, 262140, 0, 262144, -196611, 0, 262144, -131075, 0, 262144, -65539, 0, 262144, -3, 0, 262144, 65533, 0, 262144, 131069, 0, 262144, 196605, 0, 262144, 262141, 0, 262144, -196610, 0, 262144, -131074, 0, 262144, -65538, 0, 262144, -2, 0, 262144, 65534, 0, 262144, 131070, 0, 262144, 196606, 0, 262144, 262142, 0, 262144, -196609, 0, 262144, -131073, 0, 262144, -65537, 0, 262144, -1, 0, 262144, 65535, 0, 262144, 131071, 0, 262144, 196607, 0, 262144, 262143, 0, 262144, -262144, 0, 262144, -196608, 0, 262144, -131072, 0, 262144, -65536, 0, 262144, 0, 0, 262144, 65536, 0, 262144, 131072, 0, 262144, 196608, 0, 262144, -262143, 0, 262144, -196607, 0, 262144, -131071, 0, 262144, -65535, 0, 262144, 1, 0, 262144, 65537, 0, 262144, 131073, 0, 262144, 196609, 0, 262144, -262142, 0, 262144, -196606, 0, 262144, -131070, 0, 262144, -65534, 0, 262144, 2, 0, 262144, 65538, 0, 262144, 131074, 0, 262144, 196610, 0, 262144, -262141, 0, 262144, -196605, 0, 262144, -131069, 0, 262144, -65533, 0, 262144, 3, 0, 262144, 65539, 0, 262144, 131075, 0, 262144, 196611, 0, 262144)
 
 [connection signal="pressed" from="Menu button" to="Menu button" method="_on_pressed"]

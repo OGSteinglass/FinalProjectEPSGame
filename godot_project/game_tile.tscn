@@ -47,13 +47,14 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tbi1y")
 }],
-"loop": true,
+"loop": false,
 "name": &"default",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [node name="Game Tile" type="Node2D"]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.127604, 0.127604)
 sprite_frames = SubResource("SpriteFrames_aew02")
 autoplay = "default"
