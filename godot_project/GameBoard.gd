@@ -48,13 +48,11 @@ func flip_direction(x,y,color,dir, board):
 
 func _ready():
 	print_board(game_board)
-	print("\n\n")
-	move(1, 4,2,game_board)
-	print_board(game_board)
 
 func print_board(board):
 	for i in board:
 		print(i)
+	print("\n\n")
 func move(color, x, y, board):
 	board[y][x] = color
 	flip_direction(x,y,color,Vector2i(0,1),board)
@@ -65,5 +63,11 @@ func move(color, x, y, board):
 	flip_direction(x,y,color,Vector2i(1,-1),board)
 	flip_direction(x,y,color,Vector2i(1,0),board)
 	flip_direction(x,y,color,Vector2i(-1,0),board)
-		
+	print_board(game_board)
+
+
+func score(board):
+	pass
+
+
 	

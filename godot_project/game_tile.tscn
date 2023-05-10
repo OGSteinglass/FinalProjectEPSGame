@@ -2,59 +2,67 @@
 
 [ext_resource type="Texture2D" uid="uid://ctdty6407rtj4" path="res://Assets/Tile SpriteMap.png" id="1_tshsv"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_x2w1b"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_fonos"]
 atlas = ExtResource("1_tshsv")
-region = Rect2(0, 0, 96, 96)
+region = Rect2(4, 4, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4bidp"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_l7ewo"]
 atlas = ExtResource("1_tshsv")
-region = Rect2(96, 0, 96, 96)
+region = Rect2(100, 4, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ltsci"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_joqjx"]
 atlas = ExtResource("1_tshsv")
-region = Rect2(192, 0, 96, 96)
+region = Rect2(196, 4, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gs0kr"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_034si"]
 atlas = ExtResource("1_tshsv")
-region = Rect2(288, 0, 96, 96)
+region = Rect2(292, 4, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_l48xl"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_tf8td"]
 atlas = ExtResource("1_tshsv")
-region = Rect2(384, 0, 96, 96)
+region = Rect2(388, 4, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tbi1y"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_pupfn"]
 atlas = ExtResource("1_tshsv")
-region = Rect2(480, 0, 96, 96)
+region = Rect2(484, 4, 96, 96)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_aew02"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_x2w1b")
+"texture": SubResource("AtlasTexture_fonos")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_4bidp")
+"texture": SubResource("AtlasTexture_l7ewo")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ltsci")
+"texture": SubResource("AtlasTexture_joqjx")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_gs0kr")
+"texture": SubResource("AtlasTexture_034si")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_l48xl")
+"texture": SubResource("AtlasTexture_tf8td")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_tbi1y")
+"texture": SubResource("AtlasTexture_pupfn")
 }],
 "loop": false,
-"name": &"default",
-"speed": 10.0
+"name": &"flip",
+"speed": 15.0
 }]
 
 [node name="Game Tile" type="Node2D"]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.127604, 0.127604)
+scale = Vector2(0.164225, 0.164225)
 sprite_frames = SubResource("SpriteFrames_aew02")
-autoplay = "default"
+animation = &"flip"
+autoplay = "flip"
+
+[node name="Button" type="Button" parent="."]
+visible = false
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
