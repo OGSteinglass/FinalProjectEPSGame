@@ -1,6 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://b6gqkbpf8sq2v"]
+[gd_scene load_steps=10 format=3 uid="uid://b6gqkbpf8sq2v"]
 
 [ext_resource type="Texture2D" uid="uid://ctdty6407rtj4" path="res://Assets/Tile SpriteMap.png" id="1_tshsv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v3300"]
+atlas = ExtResource("1_tshsv")
+region = Rect2(4, 100, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fonos"]
 atlas = ExtResource("1_tshsv")
@@ -30,6 +34,14 @@ region = Rect2(484, 4, 96, 96)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_v3300")
+}],
+"loop": true,
+"name": &"empty",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_fonos")
 }, {
 "duration": 1.0,
@@ -57,8 +69,8 @@ animations = [{
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.164225, 0.164225)
 sprite_frames = SubResource("SpriteFrames_aew02")
-animation = &"flip"
-autoplay = "flip"
+animation = &"empty"
+autoplay = "empty"
 
 [node name="Button" type="Button" parent="."]
 visible = false

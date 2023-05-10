@@ -55,6 +55,7 @@ func print_board(board):
 	print("Black score: "+str(score(board,1)))
 	print("White score: "+str(score(board,2)))
 	print("\n\n")
+
 func move(color, x, y, board):
 	if is_legal_move(board, color, x,y):
 		board[y][x] = color
@@ -102,4 +103,4 @@ func is_legal_move(board, color, x,y):
 	else:
 		return false
 
-	
+
