@@ -3,7 +3,6 @@ extends TileMap
 enum State {BlackTurn, WhiteTurn, BlackWin, WhiteWin, Draw}
 
 var curstate = State.BlackTurn
-var moves_remaining = 60
 #0 means empty. 1 means Black. 2 means White
 var game_board =[
 	[0,0,0,0,0,0,0,0],
@@ -48,10 +47,13 @@ func flip_direction(x,y,color,dir, board):
 
 func _ready():
 	print_board(game_board)
+	
 
 func print_board(board):
 	for i in board:
 		print(i)
+	print("Black score: "+str(score(board,1)))
+	print("White score: "+str(score(board,2)))
 	print("\n\n")
 func move(color, x, y, board):
 	board[y][x] = color
@@ -64,10 +66,26 @@ func move(color, x, y, board):
 	flip_direction(x,y,color,Vector2i(1,0),board)
 	flip_direction(x,y,color,Vector2i(-1,0),board)
 	print_board(game_board)
+	if curstate == State.BlackTurn:
+		curstate = State.WhiteTurn
+	elif curstate == State.WhiteTurn:
+		curstate = State.BlackTurn
+	#TODO make something happen when someone wins
+	if score(board,1) + score(board,2) == 64:
+		if score(board,1)>32:
+			curstate=State.BlackWin
+		elif score(board,2)>32:
+			curstate=State.WhiteWin
+		elif score(board,1)==score(board,2):
+			curstate=State.Draw
 
 
-func score(board):
-	pass
-
+func score(board, color):
+	var score = 0
+	for row in board:
+		for i in row:
+			if i == color:
+				score+=1
+	return score
 
 	
