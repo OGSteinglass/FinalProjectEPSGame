@@ -56,28 +56,30 @@ func print_board(board):
 	print("White score: "+str(score(board,2)))
 	print("\n\n")
 func move(color, x, y, board):
-	board[y][x] = color
-	flip_direction(x,y,color,Vector2i(0,1),board)
-	flip_direction(x,y,color,Vector2i(-1,1),board)
-	flip_direction(x,y,color,Vector2i(1,1),board)
-	flip_direction(x,y,color,Vector2i(0,-1),board)
-	flip_direction(x,y,color,Vector2i(-1,-1),board)
-	flip_direction(x,y,color,Vector2i(1,-1),board)
-	flip_direction(x,y,color,Vector2i(1,0),board)
-	flip_direction(x,y,color,Vector2i(-1,0),board)
-	print_board(game_board)
-	if curstate == State.BlackTurn:
-		curstate = State.WhiteTurn
-	elif curstate == State.WhiteTurn:
-		curstate = State.BlackTurn
-	#TODO make something happen when someone wins
-	if score(board,1) + score(board,2) == 64:
-		if score(board,1)>32:
-			curstate=State.BlackWin
-		elif score(board,2)>32:
-			curstate=State.WhiteWin
-		elif score(board,1)==score(board,2):
-			curstate=State.Draw
+	if is_legal_move(board, color, x,y):
+		board[y][x] = color
+		flip_direction(x,y,color,Vector2i(0,1),board)
+		flip_direction(x,y,color,Vector2i(-1,1),board)
+		flip_direction(x,y,color,Vector2i(1,1),board)
+		flip_direction(x,y,color,Vector2i(0,-1),board)
+		flip_direction(x,y,color,Vector2i(-1,-1),board)
+		flip_direction(x,y,color,Vector2i(1,-1),board)
+		flip_direction(x,y,color,Vector2i(1,0),board)
+		flip_direction(x,y,color,Vector2i(-1,0),board)
+		print_board(game_board)
+		if curstate == State.BlackTurn:
+			curstate = State.WhiteTurn
+		elif curstate == State.WhiteTurn:
+			curstate = State.BlackTurn
+		#TODO make something happen when someone wins
+		if score(board,1) + score(board,2) == 64:
+			if score(board,1)>32:
+				curstate=State.BlackWin
+			elif score(board,2)>32:
+				curstate=State.WhiteWin
+			elif score(board,1)==score(board,2):
+				curstate=State.Draw
+	
 
 
 func score(board, color):
@@ -87,5 +89,17 @@ func score(board, color):
 			if i == color:
 				score+=1
 	return score
+	
+func is_legal_move(board, color, x,y):
+	if board[y][x] == 0:
+		var test_board = board
+		test_board.move(color, x,y,board)
+		test_board[y][x]=0
+		if test_board==board:
+			return false
+		else:
+			return true	
+	else:
+		return false
 
 	
