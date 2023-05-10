@@ -1,6 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://b6gqkbpf8sq2v"]
+[gd_scene load_steps=13 format=3 uid="uid://b6gqkbpf8sq2v"]
 
+[ext_resource type="Script" path="res://game_tile.gd" id="1_5bdcx"]
 [ext_resource type="Texture2D" uid="uid://ctdty6407rtj4" path="res://Assets/Tile SpriteMap.png" id="1_tshsv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_snnpd"]
+atlas = ExtResource("1_tshsv")
+region = Rect2(484, 4, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v3300"]
 atlas = ExtResource("1_tshsv")
@@ -30,8 +35,20 @@ region = Rect2(388, 4, 96, 96)
 atlas = ExtResource("1_tshsv")
 region = Rect2(484, 4, 96, 96)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_o5puc"]
+atlas = ExtResource("1_tshsv")
+region = Rect2(4, 4, 96, 96)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_aew02"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_snnpd")
+}],
+"loop": true,
+"name": &"black",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_v3300")
@@ -62,14 +79,23 @@ animations = [{
 "loop": false,
 "name": &"flip",
 "speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o5puc")
+}],
+"loop": true,
+"name": &"white",
+"speed": 5.0
 }]
 
 [node name="Game Tile" type="Node2D"]
+script = ExtResource("1_5bdcx")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.164225, 0.164225)
 sprite_frames = SubResource("SpriteFrames_aew02")
-animation = &"empty"
+animation = &"black"
 autoplay = "empty"
 
 [node name="Button" type="Button" parent="."]
@@ -78,3 +104,5 @@ offset_left = -8.0
 offset_top = -8.0
 offset_right = 8.0
 offset_bottom = 8.0
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
