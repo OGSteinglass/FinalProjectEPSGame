@@ -39,7 +39,7 @@ func flip_direction(x,y,color,dir, board):
 		#if the tile is our color we should go back and flip
 		else:
 			
-			while i !=x:
+			while i !=x or j!=y:
 				board[j][i] = color
 				i-=dir.x
 				j-=dir.y
