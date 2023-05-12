@@ -47,7 +47,9 @@ func flip_direction(x,y,color,dir, board):
 
 func _ready():
 	print_board(game_board)
-	
+	print(is_legal_move(game_board,1,2,4))
+	print(get_legal_moves(game_board,1))
+	print_board(game_board)
 
 func print_board(board):
 	for i in board:
@@ -56,8 +58,7 @@ func print_board(board):
 	print("White score: "+str(score(board,2)))
 	print("\n\n")
 
-func move(color, x, y, board):
-	if is_legal_move(board, color, x,y):
+func move(color, x, y, board, print):
 		board[y][x] = color
 		flip_direction(x,y,color,Vector2i(0,1),board)
 		flip_direction(x,y,color,Vector2i(-1,1),board)
@@ -67,7 +68,8 @@ func move(color, x, y, board):
 		flip_direction(x,y,color,Vector2i(1,-1),board)
 		flip_direction(x,y,color,Vector2i(1,0),board)
 		flip_direction(x,y,color,Vector2i(-1,0),board)
-		print_board(game_board)
+		if print:
+			print_board(game_board)
 		if curstate == State.BlackTurn:
 			curstate = State.WhiteTurn
 		elif curstate == State.WhiteTurn:
@@ -93,8 +95,8 @@ func score(board, color):
 	
 func is_legal_move(board, color, x,y):
 	if board[y][x] == 0:
-		var test_board = board
-		test_board.move(color, x,y,board)
+		var test_board = board.duplicate(true)
+		move(color, x,y,test_board, false)
 		test_board[y][x]=0
 		if test_board==board:
 			return false
@@ -102,5 +104,12 @@ func is_legal_move(board, color, x,y):
 			return true	
 	else:
 		return false
-
-
+#return a list of the x and y coordinates of legal moves
+func get_legal_moves(board, color):
+	var out = []
+	for i in range(8):
+		for j in range(8):
+			if is_legal_move(board,color,j,i):
+				print("hi")
+				out.append(Vector2i(j,i))
+	return out
