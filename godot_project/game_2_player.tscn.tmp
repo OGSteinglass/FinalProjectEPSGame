@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://cpa8o3u4r08f6"]
+
+[ext_resource type="Script" path="res://Menu button.gd" id="1_0blxb"]
+[ext_resource type="PackedScene" uid="uid://b6gqkbpf8sq2v" path="res://game_tile.tscn" id="2_kbtlo"]
+[ext_resource type="Script" path="res://GameBoard.gd" id="3_88f8x"]
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_b5l5w"]
+scenes/0/scene = ExtResource("2_kbtlo")
+
+[sub_resource type="TileSet" id="TileSet_yehpb"]
+sources/0 = SubResource("TileSetScenesCollectionSource_b5l5w")
+
+[node name="Game 2 Player" type="Node2D"]
+
+[node name="Menu button" type="Button" parent="."]
+offset_left = 444.0
+offset_top = 32.0
+offset_right = 639.0
+offset_bottom = 81.0
+text = "Back to Main Menu"
+script = ExtResource("1_0blxb")
+
+[node name="GameBoard" type="TileMap" parent="."]
+position = Vector2(354, 153)
+scale = Vector2(3, 3)
+tile_set = SubResource("TileSet_yehpb")
+format = 2
+layer_0/tile_data = PackedInt32Array(0, 0, 0, 65536, 0, 0, 131072, 0, 0, 196608, 0, 0, 262144, 0, 0, 327680, 0, 0, 393216, 0, 0, 458752, 0, 0, 1, 0, 0, 65537, 0, 0, 131073, 0, 0, 196609, 0, 0, 262145, 0, 0, 327681, 0, 0, 393217, 0, 0, 458753, 0, 0, 2, 0, 0, 65538, 0, 0, 131074, 0, 0, 196610, 0, 0, 262146, 0, 0, 327682, 0, 0, 393218, 0, 0, 458754, 0, 0, 3, 0, 0, 65539, 0, 0, 131075, 0, 0, 196611, 0, 0, 262147, 0, 0, 327683, 0, 0, 393219, 0, 0, 458755, 0, 0, 4, 0, 0, 65540, 0, 0, 131076, 0, 0, 196612, 0, 0, 262148, 0, 0, 327684, 0, 0, 393220, 0, 0, 458756, 0, 0, 5, 0, 0, 65541, 0, 0, 131077, 0, 0, 196613, 0, 0, 262149, 0, 0, 327685, 0, 0, 393221, 0, 0, 458757, 0, 0, 6, 0, 0, 65542, 0, 0, 131078, 0, 0, 196614, 0, 0, 262150, 0, 0, 327686, 0, 0, 393222, 0, 0, 458758, 0, 0, 7, 0, 0, 65543, 0, 0, 131079, 0, 0, 196615, 0, 0, 262151, 0, 0, 327687, 0, 0, 393223, 0, 0, 458759, 0, 0)
+script = ExtResource("3_88f8x")
+
+[connection signal="pressed" from="Menu button" to="Menu button" method="_on_pressed"]

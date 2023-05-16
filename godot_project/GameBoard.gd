@@ -13,9 +13,9 @@ var game_board =[
 	[0,0,0,0,0,0,0,0],
 	[0,0,0,1,2,0,0,0],
 	[0,0,0,2,1,0,0,0],
-	[0,0,0,0,0,0,2,1],
-	[0,0,0,0,0,1,0,0],
-	[0,0,0,0,0,2,2,1]
+	[0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0,0]
 ]
 
 #flips all the cells that should be flipped in the direction of the input
@@ -90,7 +90,10 @@ func move(color, x, y, board, real):
 					curstate=State.WhiteWin
 				elif score(board,1)==score(board,2):
 					curstate=State.Draw
-					
+			if score(board,1)==0:
+				curstate=State.WhiteWin
+			if score(board, 2) == 0:
+				curstate=State.BlackWin	
 	
 
 
@@ -123,8 +126,32 @@ func get_legal_moves(board, color):
 	return out
 	
 func evaluate(board, color, depth):
+	
 	if depth == 0:
 		return simple_evaluate(board, color)
+	else:
+		var target_color = get_target_color(color)
+		var moves = get_legal_moves(board,color)
+		if score(board,1) + score(board,2) == 64:
+			if score(board,color)>32:
+					return 10000
+			elif score(board,target_color)>32:
+					return -10000
+			elif score(board,color)==score(board,target_color):
+					return 0
+		if score(board, color)==0:
+			return -10000
+		if score(board, target_color) == 0:
+			return 10000
+		if len(moves) ==0:
+			return -1*evaluate(board, target_color, depth-1)
+		var best_move = Vector2i.ZERO
+		var best_eval = -10000
+		for i in range(len(moves)):
+			var new_board = board.duplicate(true)
+			
+			move(color, moves[i].x, moves[i].y, new_board, false)
+			return -1*evaluate(new_board,target_color,depth-1)
 		
 func simple_evaluate(board, color):
 	var target_color = get_target_color(color)
@@ -178,3 +205,19 @@ func simple_evaluate(board, color):
 		elif score(board,1)==score(board,2):
 			win = 0 
 	return moves*MOVE_WEIGHT+score*SCORE_WEIGHT+corners*CORNER_WEIGHT+edges*EDGE_WEIGHT+win
+
+
+func get_best_move(board, color,depth):
+	var target_color = get_target_color(color)
+	var moves=get_legal_moves(board, color)
+	var best_move=Vector2.ZERO
+	var best_eval = -100000
+	for i in range(len(moves)):
+		var new_board = board.duplicate(true)
+		
+		move(color, moves[i].x, moves[i].y, new_board, false)
+		if best_eval< evaluate(new_board,target_color,depth-1):
+			best_move=moves[i]
+	return best_move
+
+
