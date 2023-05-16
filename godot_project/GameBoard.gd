@@ -84,7 +84,6 @@ func move(color, x, y, board, real):
 		flip_direction(x,y,color,Vector2i(1,0),board)
 		flip_direction(x,y,color,Vector2i(-1,0),board)
 		if real:
-			print_board(game_board)
 			if curstate == State.BlackTurn:
 				curstate = State.WhiteTurn
 			elif curstate == State.WhiteTurn:
@@ -105,7 +104,7 @@ func move(color, x, y, board, real):
 func _process(delta):
 	timer+=delta
 	if curstate==State.WhiteTurn and timer>0.4:
-		var best_move=get_best_move(game_board,2,5)
+		var best_move=get_best_move(game_board,2,4)
 		move(2,best_move.x,best_move.y,game_board,true)
 		render(game_board)
 		
@@ -159,14 +158,14 @@ func evaluate(board, color, depth):
 		if len(moves) ==0:
 			return -1*evaluate(board, target_color, depth-1)
 		var best_move = Vector2i.ZERO
-		var best_eval = -10000
+		var best_eval = 10000
 		for i in range(len(moves)):
 			
 			var new_board = board.duplicate(true)
-			
+			#TODO figure out this inequality
 			move(color, moves[i].x, moves[i].y, new_board, false)
 			var eval = -1*evaluate(new_board,target_color,depth-1)
-			if eval>best_eval:
+			if eval<best_eval:
 				best_eval=eval
 				best_move=moves[i]
 		return best_eval
@@ -213,6 +212,7 @@ func simple_evaluate(board, color):
 			edges-=1
 	if score(board,target_color)==0:
 		win = 100000
+		
 	if score(board, color) == 0:
 		win = -100000
 	if score(board,1) + score(board,2) == 64:
@@ -236,10 +236,11 @@ func get_best_move(board, color,depth):
 	for i in range(len(moves)):
 		
 		var new_board = board.duplicate(true)
-		
+		var eval = -evaluate(new_board,target_color,depth-1)
 		move(color, moves[i].x, moves[i].y, new_board, false)
-		if best_eval> evaluate(new_board,target_color,depth-1):
+		if best_eval> eval:
 			best_move=moves[i]
+			best_eval=eval
 	print(best_eval)
 	return best_move
 	
@@ -255,7 +256,6 @@ func _unhandled_input(event):
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			
 			var clicked_cell = local_to_map(event.position/scale.x-position/scale.x)
-			print(clicked_cell)
 			if clicked_cell.x<=7 and clicked_cell.x>=0 and clicked_cell.y<=7 and clicked_cell.y>=0:
 				var color=0
 				if curstate==State.BlackTurn:
