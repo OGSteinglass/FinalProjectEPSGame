@@ -18,7 +18,7 @@ var game_board =[
 	[0,0,0,0,0,0,0,0]
 ]
 var rendered_game_board = []
-
+var timer = 0
 
 #flips all the cells that should be flipped in the direction of the input
 
@@ -102,7 +102,13 @@ func move(color, x, y, board, real):
 			if score(board, 2) == 0:
 				curstate=State.BlackWin	
 	
-
+func _process(delta):
+	timer+=delta
+	if curstate==State.WhiteTurn and timer>0.4:
+		var best_move=get_best_move(game_board,2,5)
+		move(2,best_move.x,best_move.y,game_board,true)
+		render(game_board)
+		
 
 func score(board, color):
 	var score = 0
@@ -155,10 +161,15 @@ func evaluate(board, color, depth):
 		var best_move = Vector2i.ZERO
 		var best_eval = -10000
 		for i in range(len(moves)):
+			
 			var new_board = board.duplicate(true)
 			
 			move(color, moves[i].x, moves[i].y, new_board, false)
-			return -1*evaluate(new_board,target_color,depth-1)
+			var eval = -1*evaluate(new_board,target_color,depth-1)
+			if eval>best_eval:
+				best_eval=eval
+				best_move=moves[i]
+		return best_eval
 		
 func simple_evaluate(board, color):
 	var target_color = get_target_color(color)
@@ -213,26 +224,31 @@ func simple_evaluate(board, color):
 			win = 0 
 	return moves*MOVE_WEIGHT+score*SCORE_WEIGHT+corners*CORNER_WEIGHT+edges*EDGE_WEIGHT+win
 
-
+#TODO make the AI pick the best move. currently it it playing pretty badly
 func get_best_move(board, color,depth):
 	var target_color = get_target_color(color)
 	var moves=get_legal_moves(board, color)
+	if len(moves)==0:
+		curstate=State.BlackTurn
 	var best_move=Vector2.ZERO
-	var best_eval = -100000
+	var best_eval = 100000
+	
 	for i in range(len(moves)):
+		
 		var new_board = board.duplicate(true)
 		
 		move(color, moves[i].x, moves[i].y, new_board, false)
-		if best_eval< evaluate(new_board,target_color,depth-1):
+		if best_eval> evaluate(new_board,target_color,depth-1):
 			best_move=moves[i]
+	print(best_eval)
 	return best_move
+	
 
 func render(board):
 	for i in range(8):
 		for j in range(8):
 			rendered_game_board[i][j].set_state(board[i][j])
-			print(rendered_game_board[i][j].position)
-			print(rendered_game_board[i][j].visible)
+			
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
@@ -244,9 +260,8 @@ func _unhandled_input(event):
 				var color=0
 				if curstate==State.BlackTurn:
 					color=1
-				if curstate==State.WhiteTurn:
-					color=2
-				if (is_legal_move(game_board,color,clicked_cell.x,clicked_cell.y)):
-					move(color,clicked_cell.x,clicked_cell.y,game_board,true)
-					render(game_board)
+					if is_legal_move(game_board,1,clicked_cell.x,clicked_cell.y):
+						move(color,clicked_cell.x,clicked_cell.y,game_board,true)
+						render(game_board)
+						timer=0
 	
