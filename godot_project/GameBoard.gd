@@ -1,5 +1,5 @@
 extends TileMap
-
+var game_tile = preload("res://game_tile.tscn")
 enum State {BlackTurn, WhiteTurn, BlackWin, WhiteWin, Draw}
 const MOVE_WEIGHT = 4
 const SCORE_WEIGHT = 1
@@ -17,6 +17,8 @@ var game_board =[
 	[0,0,0,0,0,0,0,0],
 	[0,0,0,0,0,0,0,0]
 ]
+var rendered_game_board = []
+
 
 #flips all the cells that should be flipped in the direction of the input
 
@@ -53,12 +55,17 @@ func flip_direction(x,y,color,dir, board):
 		
 
 func _ready():
+	
+	for i in range(8):
+		rendered_game_board.append([])
+		for j in range(8):
+			rendered_game_board[i].append(game_tile.instantiate())
+			add_child(rendered_game_board[i][j])
+			print("instatiated")
+			rendered_game_board[i][j].position = map_to_local(Vector2(j,i))
 	print_board(game_board)
-	print(is_legal_move(game_board,1,2,4))
-	print(get_legal_moves(game_board,2))
 	print_board(game_board)
-	print(simple_evaluate(game_board,1))
-
+	render(game_board)
 func print_board(board):
 	for i in board:
 		print(i)
@@ -220,4 +227,26 @@ func get_best_move(board, color,depth):
 			best_move=moves[i]
 	return best_move
 
+func render(board):
+	for i in range(8):
+		for j in range(8):
+			rendered_game_board[i][j].set_state(board[i][j])
+			print(rendered_game_board[i][j].position)
+			print(rendered_game_board[i][j].visible)
 
+func _unhandled_input(event):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			
+			var clicked_cell = local_to_map(event.position/scale.x-position/scale.x)
+			print(clicked_cell)
+			if clicked_cell.x<=7 and clicked_cell.x>=0 and clicked_cell.y<=7 and clicked_cell.y>=0:
+				var color=0
+				if curstate==State.BlackTurn:
+					color=1
+				if curstate==State.WhiteTurn:
+					color=2
+				if (is_legal_move(game_board,color,clicked_cell.x,clicked_cell.y)):
+					move(color,clicked_cell.x,clicked_cell.y,game_board,true)
+					render(game_board)
+	

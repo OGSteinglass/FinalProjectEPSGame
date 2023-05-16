@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b6gqkbpf8sq2v"]
+[gd_scene load_steps=19 format=3 uid="uid://b6gqkbpf8sq2v"]
 
 [ext_resource type="Script" path="res://game_tile.gd" id="1_5bdcx"]
 [ext_resource type="Texture2D" uid="uid://ctdty6407rtj4" path="res://Assets/Tile SpriteMap.png" id="1_tshsv"]
@@ -34,6 +34,30 @@ region = Rect2(388, 4, 96, 96)
 [sub_resource type="AtlasTexture" id="AtlasTexture_pupfn"]
 atlas = ExtResource("1_tshsv")
 region = Rect2(484, 4, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2helh"]
+atlas = ExtResource("1_tshsv")
+region = Rect2(484, 4, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2y82x"]
+atlas = ExtResource("1_tshsv")
+region = Rect2(388, 4, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h37bd"]
+atlas = ExtResource("1_tshsv")
+region = Rect2(292, 4, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0mewy"]
+atlas = ExtResource("1_tshsv")
+region = Rect2(196, 4, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jjd30"]
+atlas = ExtResource("1_tshsv")
+region = Rect2(100, 4, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_boh5u"]
+atlas = ExtResource("1_tshsv")
+region = Rect2(4, 4, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o5puc"]
 atlas = ExtResource("1_tshsv")
@@ -77,7 +101,30 @@ animations = [{
 "texture": SubResource("AtlasTexture_pupfn")
 }],
 "loop": false,
-"name": &"flip",
+"name": &"flip_black",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2helh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2y82x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h37bd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0mewy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jjd30")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_boh5u")
+}],
+"loop": false,
+"name": &"flip_white",
 "speed": 15.0
 }, {
 "frames": [{
@@ -95,7 +142,7 @@ script = ExtResource("1_5bdcx")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.164225, 0.164225)
 sprite_frames = SubResource("SpriteFrames_aew02")
-animation = &"black"
+animation = &"flip_white"
 autoplay = "empty"
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

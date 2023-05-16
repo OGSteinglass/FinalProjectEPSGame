@@ -11,9 +11,9 @@ func switch_to(state):
 	elif state == State.White:
 		$AnimatedSprite2D.play("white")
 	elif state == State.FlippingBlack:
-		$AnimatedSprite2D.play("flip")
+		$AnimatedSprite2D.play("flip_black")
 	elif state == State.FlippingWhite:
-		$AnimatedSprite2D.play_backwards("flip")
+		$AnimatedSprite2D.play("flip_white")
 
 func _ready():
 	switch_to(State.Empty)
@@ -24,3 +24,18 @@ func _on_animated_sprite_2d_animation_finished():
 		switch_to(State.White)
 	elif curstate == State.FlippingBlack:
 		switch_to(State.Black)
+
+func set_state(color):
+	if color == 1:
+		if curstate==State.Empty:
+			switch_to(State.Black)
+		elif curstate!=State.Black:
+			switch_to(State.FlippingBlack)
+	if color == 2:
+		if curstate==State.Empty:
+			switch_to(State.White)
+		elif curstate!=State.White:
+			switch_to(State.FlippingWhite)
+		
+	if color == 0:
+		switch_to(State.Empty)
