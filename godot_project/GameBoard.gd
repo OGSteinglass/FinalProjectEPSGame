@@ -103,10 +103,16 @@ func move(color, x, y, board, real):
 	
 func _process(delta):
 	timer+=delta
+	if curstate==State.BlackTurn and timer>0.4:
+		if len(get_legal_moves(game_board,1))==0:
+			curstate=State.WhiteTurn
 	if curstate==State.WhiteTurn and timer>0.4:
-		var best_move=get_best_move(game_board,2,4)
-		move(2,best_move.x,best_move.y,game_board,true)
-		render(game_board)
+		if len(get_legal_moves(game_board,2))==0:
+			curstate=State.BlackTurn
+		else:
+			var best_move=get_best_move(game_board,2,4)
+			move(2,best_move.x,best_move.y,game_board,true)
+			render(game_board)
 		
 
 func score(board, color):
