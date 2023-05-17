@@ -103,16 +103,7 @@ func move(color, x, y, board, real):
 	
 func _process(delta):
 	timer+=delta
-	if curstate==State.BlackTurn and timer>0.4:
-		if len(get_legal_moves(game_board,1))==0:
-			curstate=State.WhiteTurn
-	if curstate==State.WhiteTurn and timer>0.4:
-		if len(get_legal_moves(game_board,2))==0:
-			curstate=State.BlackTurn
-		else:
-			var best_move=get_best_move(game_board,2,4)
-			move(2,best_move.x,best_move.y,game_board,true)
-			render(game_board)
+	
 		
 
 func score(board, color):
@@ -143,7 +134,7 @@ func get_legal_moves(board, color):
 				out.append(Vector2i(j,i))
 	return out
 	
-func evaluate(board, color, depth):
+func evaluate(board, color, depth, a):
 	
 	if depth == 0:
 		return simple_evaluate(board, color)
@@ -161,16 +152,20 @@ func evaluate(board, color, depth):
 			return -10000
 		if score(board, target_color) == 0:
 			return 10000
-		if len(moves) ==0:
-			return -1*evaluate(board, target_color, depth-1)
-		var best_move = Vector2i.ZERO
 		var best_eval = 10000
+		if len(moves) ==0:
+			return -1*evaluate(board, target_color, depth-1, best_eval)
+		var best_move = Vector2i.ZERO
+		
 		for i in range(len(moves)):
 			
 			var new_board = board.duplicate(true)
 			#TODO figure out this inequality
 			move(color, moves[i].x, moves[i].y, new_board, false)
-			var eval = -1*evaluate(new_board,target_color,depth-1)
+			var eval = -1*evaluate(new_board,target_color,depth-1, best_eval)
+			
+			if eval > a:
+				return eval
 			if eval<best_eval:
 				best_eval=eval
 				best_move=moves[i]
@@ -240,9 +235,9 @@ func get_best_move(board, color,depth):
 	var best_eval = 100000
 	
 	for i in range(len(moves)):
-		
+		var old_best = -1000000
 		var new_board = board.duplicate(true)
-		var eval = -evaluate(new_board,target_color,depth-1)
+		var eval = -evaluate(new_board,target_color,depth-1,0-old_best)
 		move(color, moves[i].x, moves[i].y, new_board, false)
 		if best_eval> eval:
 			best_move=moves[i]
@@ -270,4 +265,14 @@ func _unhandled_input(event):
 						move(color,clicked_cell.x,clicked_cell.y,game_board,true)
 						render(game_board)
 						timer=0
+						
+						if len(get_legal_moves(game_board,1))==0:
+							curstate=State.WhiteTurn
+					
+						if len(get_legal_moves(game_board,2))==0:
+							curstate=State.BlackTurn
+						else:
+							var best_move=get_best_move(game_board,2,5)
+							move(2,best_move.x,best_move.y,game_board,true)
+							render(game_board)
 	
