@@ -154,15 +154,15 @@ func evaluate(board, color, depth, a):
 		var moves = get_legal_moves(board,color)
 		if score(board,1) + score(board,2) == 64:
 			if score(board,color)>32:
-					return 10000
-			elif score(board,target_color)>32:
 					return -10000
+			elif score(board,target_color)>32:
+					return 10000
 			elif score(board,color)==score(board,target_color):
 					return 0
 		if score(board, color)==0:
-			return -10000
-		if score(board, target_color) == 0:
 			return 10000
+		if score(board, target_color) == 0:
+			return -10000
 		var best_eval = null
 		if len(moves) ==0:
 			return -1*evaluate(board, target_color, depth-1, best_eval)
