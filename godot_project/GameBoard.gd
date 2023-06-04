@@ -110,7 +110,11 @@ func _process(delta):
 			if len(get_legal_moves(game_board,2))==0:
 				curstate=State.BlackTurn
 			else:
-				var best_move=get_best_move(game_board,2,4)
+				var best_move = null
+				if Globals.difficulty == "easy" or Globals.difficulty == "hard":
+					best_move = get_best_move(game_board,2,4)
+				else:
+					best_move = get_best_move(game_board,2,1)
 				move(2,best_move.x,best_move.y,game_board,true)
 				render(game_board)
 		
@@ -148,21 +152,36 @@ func evaluate(board, color, depth, a):
 	print("depth", depth)
 	print("a:", a)
 	if depth == 0:
-		return -simple_evaluate(board, color)
+		if Globals.difficulty == "easy":
+			return simple_evaluate(board, color)
+		else:
+			return -simple_evaluate(board, color)
 	else:
 		var target_color = get_target_color(color)
 		var moves = get_legal_moves(board,color)
 		if score(board,1) + score(board,2) == 64:
 			if score(board,color)>32:
+				if Globals.difficulty == "easy":
+					return 10000
+				else:
 					return -10000
 			elif score(board,target_color)>32:
+				if Globals.difficulty == "easy":
+					return -10000
+				else:
 					return 10000
 			elif score(board,color)==score(board,target_color):
 					return 0
 		if score(board, color)==0:
-			return 10000
+			if Globals.difficulty == "easy":
+				return -10000
+			else:
+				return 10000
 		if score(board, target_color) == 0:
-			return -10000
+			if Globals.difficulty == "easy":
+				return 10000
+			else:
+				return -10000
 		var best_eval = null
 		if len(moves) ==0:
 			return -1*evaluate(board, target_color, depth-1, best_eval)

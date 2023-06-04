@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bykl5etq4b3s"]
+[gd_scene load_steps=3 format=3 uid="uid://bykl5etq4b3s"]
 
 [ext_resource type="Script" path="res://Play Button.gd" id="1_dmicf"]
+[ext_resource type="Script" path="res://Settings.gd" id="2_36oek"]
 
 [node name="Main Screen" type="Node2D"]
 
@@ -36,5 +37,7 @@ offset_right = 679.0
 offset_bottom = 364.0
 theme_override_font_sizes/font_size = 46
 text = "Settings"
+script = ExtResource("2_36oek")
 
 [connection signal="pressed" from="Play Button" to="Play Button" method="_on_pressed"]
+[connection signal="pressed" from="Settings" to="Settings" method="_on_pressed"]
