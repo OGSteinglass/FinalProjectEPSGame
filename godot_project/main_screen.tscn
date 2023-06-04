@@ -22,14 +22,6 @@ theme_override_font_sizes/font_size = 57
 text = "Play"
 script = ExtResource("1_dmicf")
 
-[node name="Play Ai Button" type="Button" parent="."]
-offset_left = 471.0
-offset_top = 391.0
-offset_right = 679.0
-offset_bottom = 477.0
-theme_override_font_sizes/font_size = 57
-text = "Play AI"
-
 [node name="Settings" type="Button" parent="."]
 offset_left = 475.0
 offset_top = 278.0
