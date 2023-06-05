@@ -84,6 +84,7 @@ func move(color, x, y, board, real):
 		flip_direction(x,y,color,Vector2i(1,0),board)
 		flip_direction(x,y,color,Vector2i(-1,0),board)
 		if real:
+			$AudioStreamPlayer2D.play(0)
 			if curstate == State.BlackTurn:
 				curstate = State.WhiteTurn
 			elif curstate == State.WhiteTurn:
