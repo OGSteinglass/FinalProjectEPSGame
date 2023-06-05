@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://cpa8o3u4r08f6"]
+[gd_scene load_steps=9 format=3 uid="uid://cpa8o3u4r08f6"]
 
 [ext_resource type="Script" path="res://Menu button.gd" id="1_0blxb"]
 [ext_resource type="PackedScene" uid="uid://b6gqkbpf8sq2v" path="res://game_tile.tscn" id="2_kbtlo"]
 [ext_resource type="Script" path="res://GameBoard.gd" id="3_88f8x"]
 [ext_resource type="AudioStream" uid="uid://8nb7fyy4llhk" path="res://sounds/Piece place.mp3" id="4_7h007"]
 [ext_resource type="AudioStream" uid="uid://ctg1iakbgiyll" path="res://sounds/solve-the-riddle-140001.mp3" id="4_n01yq"]
+[ext_resource type="Script" path="res://Play Again.gd" id="5_kn8ts"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_b5l5w"]
 scenes/0/scene = ExtResource("2_kbtlo")
@@ -34,8 +35,26 @@ script = ExtResource("3_88f8x")
 position = Vector2(8, 8)
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="GameBoard"]
+visible = false
 stream = ExtResource("4_7h007")
 volume_db = 24.0
+
+[node name="Play Again" type="Button" parent="GameBoard"]
+visible = false
+z_index = 2
+offset_left = 23.0
+offset_top = 132.667
+offset_right = 111.0
+offset_bottom = 163.667
+text = "Play Again"
+script = ExtResource("5_kn8ts")
+
+[node name="Win Text" type="Label" parent="GameBoard"]
+z_index = 2
+offset_left = 106.0
+offset_top = -44.0
+offset_right = 146.0
+offset_bottom = -21.0
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_n01yq")
@@ -43,3 +62,4 @@ volume_db = -16.771
 autoplay = true
 
 [connection signal="pressed" from="Menu button" to="Menu button" method="_on_pressed"]
+[connection signal="pressed" from="GameBoard/Play Again" to="GameBoard/Play Again" method="_on_pressed"]

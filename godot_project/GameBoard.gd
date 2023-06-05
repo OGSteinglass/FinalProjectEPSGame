@@ -53,7 +53,18 @@ func flip_direction(x,y,color,dir, board):
 				j-=dir.y
 			return
 		
-
+func has_won(board):
+	if len(get_legal_moves(board,1)) ==0 and len(get_legal_moves(board,2))==0:
+		var score_1 = score(board,1) 
+		var score_2 = score(board,2)
+		if score_1==score_2:
+			return 0
+		elif score_1>score_2:
+			return 1
+		elif score_2>score_1:
+			return 2
+	else:
+		return -1
 func _ready():
 	
 	for i in range(8):
@@ -90,18 +101,26 @@ func move(color, x, y, board, real):
 			elif curstate == State.WhiteTurn:
 				curstate = State.BlackTurn
 			#TODO make something happen when someone wins
-			if score(board,1) + score(board,2) == 64:
-				if score(board,1)>32:
+			var win = has_won(board)
+			if win != -1:
+				if win==1:
 					curstate=State.BlackWin
-				elif score(board,2)>32:
+				elif win ==2:
 					curstate=State.WhiteWin
-				elif score(board,1)==score(board,2):
-					curstate=State.Draw
-			if score(board,1)==0:
-				curstate=State.WhiteWin
-			if score(board, 2) == 0:
-				curstate=State.BlackWin	
-	
+				elif win ==0:
+					curstate= State.Draw
+				end_game()
+
+func end_game():
+	if curstate==State.BlackWin:
+		$"Win Text".text = "Black Won"
+	elif curstate==State.WhiteWin:
+		$"Win Text".text = "White Won"
+	elif curstate==State.Draw:
+		$"Win Text".text = "draw"
+	$"Win Text".visible = true
+	$"Play Again".visible=true
+
 func _process(delta):
 	timer+=delta
 	if timer >= 0.4:
