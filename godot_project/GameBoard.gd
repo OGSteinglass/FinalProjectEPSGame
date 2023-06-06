@@ -1,9 +1,9 @@
 extends TileMap
 var game_tile = preload("res://game_tile.tscn")
 enum State {BlackTurn, WhiteTurn, BlackWin, WhiteWin, Draw}
-const MOVE_WEIGHT = 4
+const MOVE_WEIGHT = 0
 const SCORE_WEIGHT = 1
-const CORNER_WEIGHT = 32
+const CORNER_WEIGHT = 320
 const EDGE_WEIGHT = 5
 var curstate = State.BlackTurn
 var DEFAULT_MODULATE = null
@@ -67,7 +67,8 @@ func has_won(board):
 	else:
 		return -1
 func _ready():
-	$AudioStreamPlayer2D.volume_db = 0+ 20*log(Globals.master_volume)
+	$AudioStreamPlayer2D.volume_db = 0+ 20*log(Globals.master_volume)+20*log(Globals.sfx_volume)
+	print($AudioStreamPlayer2D.volume_db)
 	for i in range(8):
 		rendered_game_board.append([])
 		for j in range(8):
@@ -97,6 +98,7 @@ func move(color, x, y, board, real):
 		flip_direction(x,y,color,Vector2i(1,0),board)
 		flip_direction(x,y,color,Vector2i(-1,0),board)
 		if real:
+			
 			$AudioStreamPlayer2D.play(0)
 			if curstate == State.BlackTurn:
 				curstate = State.WhiteTurn
