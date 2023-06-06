@@ -6,6 +6,7 @@ const SCORE_WEIGHT = 1
 const CORNER_WEIGHT = 32
 const EDGE_WEIGHT = 5
 var curstate = State.BlackTurn
+var DEFAULT_MODULATE = null
 #0 means empty. 1 means Black. 2 means White
 var game_board =[
 	[0,0,0,0,0,0,0,0],
@@ -74,6 +75,7 @@ func _ready():
 			add_child(rendered_game_board[i][j])
 			print("instatiated")
 			rendered_game_board[i][j].position = map_to_local(Vector2(j,i))
+	DEFAULT_MODULATE = rendered_game_board[0][0].modulate
 	print_board(game_board)
 	print_board(game_board)
 	render(game_board)
@@ -123,7 +125,13 @@ func end_game():
 
 func _process(delta):
 	timer+=delta
+	if curstate == State.BlackTurn and timer>=0.7 and Globals.show_moves:
+		for i in get_legal_moves(game_board,1):
+			rendered_game_board[i.y][i.x].make_avalable(true)
 	if timer >= 0.4:
+		
+				
+				
 		if len(get_legal_moves(game_board,1))==0:
 			curstate=State.WhiteTurn
 		if curstate == State.WhiteTurn:
@@ -137,6 +145,9 @@ func _process(delta):
 					best_move = get_best_move(game_board,2,1)
 				move(2,best_move.x,best_move.y,game_board,true)
 				render(game_board)
+				
+					
+					
 		
 		
 
@@ -322,8 +333,12 @@ func _unhandled_input(event):
 				if curstate==State.BlackTurn:
 					color=1
 					if is_legal_move(game_board,1,clicked_cell.x,clicked_cell.y):
+						if Globals.show_moves:
+							for cell in get_legal_moves(game_board,1):
+								rendered_game_board[cell.y][cell.x].make_avalable(false)
 						move(color,clicked_cell.x,clicked_cell.y,game_board,true)
 						render(game_board)
+						
 						timer=0
 						
 						

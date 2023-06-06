@@ -142,7 +142,7 @@ script = ExtResource("1_5bdcx")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.164225, 0.164225)
 sprite_frames = SubResource("SpriteFrames_aew02")
-animation = &"flip_white"
+animation = &"empty"
 autoplay = "empty"
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

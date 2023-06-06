@@ -1,7 +1,7 @@
 extends Node2D
-enum State {Black, White, Empty, FlippingBlack, FlippingWhite}
+enum State {Black, White, Empty, FlippingBlack, FlippingWhite, Avalable}
 var curstate = State.Empty
-
+var DEFAULT_MODULATE = modulate
 func switch_to(state):
 	curstate = state
 	if state == State.Black:
@@ -39,3 +39,13 @@ func set_state(color):
 		
 	if color == 0:
 		switch_to(State.Empty)
+	
+func make_avalable(yes):
+	if yes:
+		curstate=State.Avalable
+		$AnimatedSprite2D.play("black")
+		modulate = Color(1,1,1,0.5)
+	if !yes:
+		curstate=State.Empty
+		$AnimatedSprite2D.play("empty")
+		modulate = DEFAULT_MODULATE
