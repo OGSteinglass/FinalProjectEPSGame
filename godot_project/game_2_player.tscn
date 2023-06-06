@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cpa8o3u4r08f6"]
+[gd_scene load_steps=10 format=3 uid="uid://cpa8o3u4r08f6"]
 
 [ext_resource type="Script" path="res://Menu button.gd" id="1_0blxb"]
 [ext_resource type="PackedScene" uid="uid://b6gqkbpf8sq2v" path="res://game_tile.tscn" id="2_kbtlo"]
@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://8nb7fyy4llhk" path="res://sounds/Piece place.mp3" id="4_7h007"]
 [ext_resource type="AudioStream" uid="uid://ctg1iakbgiyll" path="res://sounds/solve-the-riddle-140001.mp3" id="4_n01yq"]
 [ext_resource type="Script" path="res://Play Again.gd" id="5_kn8ts"]
+[ext_resource type="Script" path="res://AudioStreamPlayer2D.gd" id="7_pcsof"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_b5l5w"]
 scenes/0/scene = ExtResource("2_kbtlo")
@@ -60,6 +61,7 @@ offset_bottom = -21.0
 stream = ExtResource("4_n01yq")
 volume_db = -16.771
 autoplay = true
+script = ExtResource("7_pcsof")
 
 [connection signal="pressed" from="Menu button" to="Menu button" method="_on_pressed"]
 [connection signal="pressed" from="GameBoard/Play Again" to="GameBoard/Play Again" method="_on_pressed"]

@@ -66,7 +66,7 @@ func has_won(board):
 	else:
 		return -1
 func _ready():
-	
+	$AudioStreamPlayer2D.volume_db = 0+ 20*log(Globals.master_volume)
 	for i in range(8):
 		rendered_game_board.append([])
 		for j in range(8):
